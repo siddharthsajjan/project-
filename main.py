@@ -1,6 +1,6 @@
 """
-IB Toolkit — Animated Streamlit App
-=====================================
+IB Toolkit — Seismic Waveform Animated Streamlit App
+=====================================================
 streamlit run main.py
 pip install streamlit yfinance pandas numpy plotly
 """
@@ -24,18 +24,17 @@ st.markdown("""
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600&display=swap');
 
 html,body,[class*="css"],[data-testid="stAppViewContainer"]{
-    background:#020510!important;
-    color:#e8eaf0!important;
+    background:#020510!important;color:#e8eaf0!important;
     font-family:'Space Grotesk',sans-serif!important;
 }
 [data-testid="stAppViewContainer"]>.main{background:#020510!important;}
 [data-testid="stHeader"]{background:transparent!important;}
 [data-testid="stToolbar"]{display:none!important;}
+*{cursor:none!important;}
 
-/* Sidebar */
 section[data-testid="stSidebar"]{
     background:rgba(2,5,16,0.98)!important;
-    border-right:1px solid rgba(0,212,170,0.12)!important;
+    border-right:1px solid rgba(0,212,170,0.1)!important;
 }
 section[data-testid="stSidebar"] *{color:#e8eaf0!important;}
 section[data-testid="stSidebar"] .stRadio label{
@@ -51,21 +50,17 @@ section[data-testid="stSidebar"] [data-testid="stTextInput"] input{
     font-size:1rem!important;padding:0.5rem 0.75rem!important;
 }
 section[data-testid="stSidebar"] [data-testid="stTextInput"] input:focus{
-    border-color:#00d4aa!important;
-    box-shadow:0 0 0 1px rgba(0,212,170,0.3)!important;
+    border-color:#00d4aa!important;box-shadow:0 0 0 1px rgba(0,212,170,0.3)!important;
 }
 section[data-testid="stSidebar"] button[kind="primary"]{
-    background:transparent!important;
-    border:1px solid #00d4aa!important;
+    background:transparent!important;border:1px solid #00d4aa!important;
     color:#00d4aa!important;border-radius:0!important;
     font-family:'Space Grotesk',sans-serif!important;
     font-size:0.8rem!important;letter-spacing:0.15em!important;
-    text-transform:uppercase!important;transition:all 0.3s!important;
-    padding:0.65rem!important;
+    text-transform:uppercase!important;transition:all 0.3s!important;padding:0.65rem!important;
 }
 section[data-testid="stSidebar"] button[kind="primary"]:hover{
-    background:rgba(0,212,170,0.1)!important;
-    box-shadow:0 0 20px rgba(0,212,170,0.2)!important;
+    background:rgba(0,212,170,0.1)!important;box-shadow:0 0 20px rgba(0,212,170,0.2)!important;
 }
 section[data-testid="stSidebar"] .stSelectbox [data-baseweb="select"]{
     background:rgba(0,212,170,0.05)!important;
@@ -74,89 +69,53 @@ section[data-testid="stSidebar"] .stSelectbox [data-baseweb="select"]{
 section[data-testid="stSidebar"] .stSlider [data-baseweb="slider"] div[role="slider"]{background:#00d4aa!important;}
 section[data-testid="stSidebar"] .stSlider [data-testid="stSliderTrackFill"]{background:#00d4aa!important;}
 
-/* Main content */
 .main .block-container{padding-top:1.5rem!important;position:relative;z-index:10;}
 
-/* Hero */
 .ib-hero{
-    position:relative;padding:3rem 2.5rem;margin-bottom:1.5rem;
+    position:relative;padding:2.8rem 2.5rem;margin-bottom:1.5rem;
     border:1px solid rgba(0,212,170,0.15);overflow:hidden;
     animation:fadeUp 0.7s ease forwards;
 }
-.ib-hero::after{
-    content:'';position:absolute;top:-1px;left:0;
-    width:60px;height:2px;background:#00d4aa;
-}
-.ib-hero-eyebrow{
-    font-size:0.65rem;letter-spacing:0.28em;text-transform:uppercase;
-    color:#00d4aa;margin-bottom:0.75rem;
-}
-.ib-hero-title{
-    font-family:'Cormorant Garamond',serif!important;
-    font-size:clamp(2.2rem,4vw,3.5rem);font-weight:300;
-    line-height:1.05;color:#e8eaf0;margin-bottom:0.5rem;
-}
+.ib-hero::after{content:'';position:absolute;top:-1px;left:0;width:60px;height:2px;background:#00d4aa;}
+.ib-hero-eyebrow{font-size:0.65rem;letter-spacing:0.28em;text-transform:uppercase;color:#00d4aa;margin-bottom:0.75rem;}
+.ib-hero-title{font-family:'Cormorant Garamond',serif!important;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:300;line-height:1.05;color:#e8eaf0;margin-bottom:0.5rem;}
 .ib-hero-title em{font-style:italic;color:#00d4aa;}
 .ib-hero-sub{font-size:0.78rem;color:#4a5568;letter-spacing:0.08em;text-transform:uppercase;}
 
-/* Section titles */
-.ib-section{
-    font-family:'Cormorant Garamond',serif!important;
-    font-size:1.5rem;font-weight:300;color:#e8eaf0;
-    border-bottom:1px solid rgba(0,212,170,0.1);
-    padding-bottom:0.5rem;margin:2rem 0 1.25rem;
-}
+.ib-section{font-family:'Cormorant Garamond',serif!important;font-size:1.5rem;font-weight:300;color:#e8eaf0;border-bottom:1px solid rgba(0,212,170,0.1);padding-bottom:0.5rem;margin:2rem 0 1.25rem;}
 .ib-section em{font-style:italic;color:#00d4aa;}
 
-/* Metric cards */
 .ib-card{
-    background:rgba(10,13,26,0.9);
-    border:1px solid rgba(0,212,170,0.1);
-    padding:1.25rem 1.4rem;margin-bottom:0.75rem;
-    position:relative;overflow:hidden;
-    transition:border-color 0.3s,transform 0.3s;
-    animation:fadeUp 0.5s ease forwards;
+    background:rgba(10,13,26,0.92);border:1px solid rgba(0,212,170,0.1);
+    padding:1.25rem 1.4rem;margin-bottom:0.75rem;position:relative;overflow:hidden;
+    transition:border-color 0.3s,transform 0.3s;animation:fadeUp 0.5s ease forwards;
 }
 .ib-card:hover{border-color:rgba(0,212,170,0.3);transform:translateY(-2px);}
-.ib-card::before{
-    content:'';position:absolute;top:0;left:0;
-    width:2px;height:0;background:#00d4aa;transition:height 0.4s;
-}
+.ib-card::before{content:'';position:absolute;top:0;left:0;width:2px;height:0;background:#00d4aa;transition:height 0.4s;}
 .ib-card:hover::before{height:100%;}
 .ib-card-label{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:#4a5568;margin-bottom:0.35rem;}
 .ib-card-value{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:300;color:#e8eaf0;line-height:1;}
-.ib-card-value.teal{color:#00d4aa;}
-.ib-card-value.red{color:#ff6b6b;}
-.ib-card-value.amber{color:#f6ad55;}
+.ib-card-value.teal{color:#00d4aa;}.ib-card-value.red{color:#ff6b6b;}.ib-card-value.amber{color:#f6ad55;}
 
-/* Verdicts */
 .ib-verdict{padding:1rem 1.5rem;margin:1rem 0;font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:300;animation:fadeUp 0.5s ease forwards;}
 .ib-verdict.under{background:linear-gradient(90deg,rgba(0,212,170,0.07),transparent);border-left:2px solid #00d4aa;color:#00d4aa;}
 .ib-verdict.over{background:linear-gradient(90deg,rgba(255,107,107,0.07),transparent);border-left:2px solid #ff6b6b;color:#ff6b6b;}
 .ib-verdict.fair{background:linear-gradient(90deg,rgba(246,173,85,0.07),transparent);border-left:2px solid #f6ad55;color:#f6ad55;}
 
-/* Tables */
 [data-testid="stDataFrame"]{border:1px solid rgba(0,212,170,0.1)!important;border-radius:0!important;}
 [data-testid="stDataFrame"] th{background:rgba(0,212,170,0.06)!important;color:#00d4aa!important;font-size:0.7rem!important;letter-spacing:0.1em!important;text-transform:uppercase!important;border-bottom:1px solid rgba(0,212,170,0.15)!important;}
 [data-testid="stDataFrame"] td{color:#8892a4!important;font-size:0.82rem!important;border-bottom:1px solid rgba(255,255,255,0.03)!important;}
-
-/* Expander */
 [data-testid="stExpander"]{border:1px solid rgba(0,212,170,0.1)!important;border-radius:0!important;background:rgba(10,13,26,0.6)!important;}
-
-/* Progress */
 [data-testid="stProgress"]>div>div{background:linear-gradient(90deg,#00d4aa,#00b894)!important;}
 
-/* Disclaimer */
 .ib-disclaimer{border:1px solid rgba(255,255,255,0.04);padding:1rem 1.5rem;color:#2a3044;font-size:0.72rem;line-height:1.7;margin-top:2.5rem;}
 
-/* Ticker tape */
 .ib-tape-outer{overflow:hidden;border-top:1px solid rgba(0,212,170,0.07);border-bottom:1px solid rgba(0,212,170,0.07);padding:0.55rem 0;margin-bottom:1.5rem;background:rgba(2,5,16,0.8);}
 .ib-tape{display:flex;gap:3rem;white-space:nowrap;animation:tape 40s linear infinite;}
 .ib-tape-item{font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:#4a5568;}
 .ib-tape-item .up{color:#00d4aa;}.ib-tape-item .dn{color:#ff6b6b;}
 @keyframes tape{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
-/* Landing idle screen */
 .ib-landing{min-height:65vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:3rem 2rem;animation:fadeUp 0.8s ease forwards;}
 .ib-landing-title{font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,7vw,6rem);font-weight:300;line-height:0.95;color:#e8eaf0;margin-bottom:1.25rem;}
 .ib-landing-title em{font-style:italic;color:#00d4aa;display:block;}
@@ -174,203 +133,142 @@ section[data-testid="stSidebar"] .stSlider [data-testid="stSliderTrackFill"]{bac
 """, unsafe_allow_html=True)
 
 # ─────────────────────────────────────────────
-#  CONSTELLATION BACKGROUND
+#  SEISMIC WAVEFORM BACKGROUND + CURSOR
 # ─────────────────────────────────────────────
 components.html("""
-<canvas id="cvs" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
-<div id="ib-cursor" style="position:fixed;width:8px;height:8px;background:#00d4aa;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width 0.2s,height 0.2s;"></div>
+<canvas id="ib-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+<div id="ib-cur" style="position:fixed;width:8px;height:8px;background:#00d4aa;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width 0.15s,height 0.15s;"></div>
 <div id="ib-ring" style="position:fixed;width:28px;height:28px;border:1px solid rgba(0,212,170,0.5);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:all 0.18s;"></div>
-<div id="ib-tip" style="position:fixed;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.3);color:#00d4aa;font-family:monospace;font-size:10px;padding:4px 10px;pointer-events:none;z-index:9999;opacity:0;transition:opacity 0.2s;letter-spacing:0.1em;text-transform:uppercase;"></div>
 <script>
 (function(){
-var cv=document.getElementById('cvs');
-var ctx=cv.getContext('2d');
-var cur=document.getElementById('ib-cursor');
+var C=document.getElementById('ib-canvas');
+var ctx=C.getContext('2d');
+var cur=document.getElementById('ib-cur');
 var ring=document.getElementById('ib-ring');
-var tip=document.getElementById('ib-tip');
-function resize(){cv.width=window.innerWidth;cv.height=window.innerHeight;}
-resize();
-window.addEventListener('resize',resize);
+function resize(){C.width=window.innerWidth;C.height=window.innerHeight;}
+resize(); window.addEventListener('resize',resize);
 
-var LABELS=['DCF','P/E','WACC','FCF','EV','EBITDA','IRR','NPV','CAPM','Beta','Alpha','Comps','LBO','M&A','IPO','NAV','ROE','ROIC','Yield','DD'];
-var mx=cv.width/2,my=cv.height/2;
-var stars=[];
-for(var i=0;i<140;i++){
-  stars.push({
-    x:Math.random()*cv.width, y:Math.random()*cv.height,
-    ox:0, oy:0,
-    vx:(Math.random()-0.5)*0.18, vy:(Math.random()-0.5)*0.18,
-    r:Math.random()*1.6+0.3,
-    pulse:Math.random()*Math.PI*2,
-    label:i<LABELS.length?LABELS[i]:null,
-    bright:Math.random()>0.65,
-    hue:Math.random()>0.8?'teal':'white'
-  });
-}
+var mx=C.width/2, my=C.height/2;
+var hexRipples=[], lastHex=0, surge=0, t=0;
 
-var hexRipples=[];
-var lastHex=0;
+var waves=[
+  {freq:0.016,speed:0.7,amp:20,y:0.08,col:'rgba(0,212,170,',base:0.10,phase:0.0},
+  {freq:0.022,speed:0.45,amp:15,y:0.20,col:'rgba(0,212,170,',base:0.07,phase:1.2},
+  {freq:0.011,speed:1.0,amp:26,y:0.35,col:'rgba(37,99,235,',base:0.09,phase:2.4},
+  {freq:0.028,speed:0.65,amp:11,y:0.52,col:'rgba(0,212,170,',base:0.06,phase:0.8},
+  {freq:0.018,speed:0.85,amp:22,y:0.67,col:'rgba(37,99,235,',base:0.08,phase:3.1},
+  {freq:0.013,speed:0.55,amp:18,y:0.80,col:'rgba(0,212,170,',base:0.07,phase:1.8},
+  {freq:0.024,speed:0.75,amp:14,y:0.92,col:'rgba(37,99,235,',base:0.05,phase:2.9},
+];
+
+var scanX=0;
 
 function drawHex(x,y,size,alpha,rot){
-  ctx.save();
-  ctx.translate(x,y);
-  ctx.rotate(rot||0);
+  ctx.save();ctx.translate(x,y);ctx.rotate(rot||0);
   ctx.beginPath();
-  for(var i=0;i<6;i++){
-    var a=Math.PI/6+i*Math.PI/3;
-    i===0?ctx.moveTo(size*Math.cos(a),size*Math.sin(a))
-         :ctx.lineTo(size*Math.cos(a),size*Math.sin(a));
-  }
-  ctx.closePath();
-  ctx.strokeStyle='rgba(0,212,170,'+alpha+')';
-  ctx.lineWidth=0.6;
-  ctx.stroke();
-  ctx.restore();
+  for(var i=0;i<6;i++){var a=Math.PI/6+i*Math.PI/3;i===0?ctx.moveTo(size*Math.cos(a),size*Math.sin(a)):ctx.lineTo(size*Math.cos(a),size*Math.sin(a));}
+  ctx.closePath();ctx.strokeStyle='rgba(0,212,170,'+alpha+')';ctx.lineWidth=0.6;ctx.stroke();ctx.restore();
 }
 
-var t=0;
 function frame(){
-  t+=0.007;
-  ctx.fillStyle='rgba(2,5,16,0.15)';
-  ctx.fillRect(0,0,cv.width,cv.height);
+  t+=0.016;
+  if(surge>0) surge-=0.025;
+  ctx.fillStyle='rgba(2,5,16,0.22)';
+  ctx.fillRect(0,0,C.width,C.height);
 
-  // Hex grid faint background
-  var gs=52;
-  for(var hx=0;hx<cv.width+gs;hx+=gs*1.5){
-    for(var hy=0;hy<cv.height+gs;hy+=gs*Math.sqrt(3)){
-      var off=(Math.floor(hx/gs/1.5)%2)*gs*Math.sqrt(3)/2;
-      var dx=hx-mx, dy=(hy+off)-my;
-      var d=Math.sqrt(dx*dx+dy*dy);
-      var a=Math.max(0,0.025-d/20000);
-      if(a>0.003) drawHex(hx,hy+off,gs*0.5,a,t*0.05);
+  waves.forEach(function(w){
+    var wy=w.y*C.height;
+    var distY=Math.abs(wy-my)/C.height;
+    var mb=Math.max(0,1-distY*3.5)*0.65;
+    var sb=surge*0.45;
+    var amp=w.amp*(1+mb+sb);
+
+    ctx.beginPath();
+    ctx.moveTo(0,wy);
+    for(var x=0;x<=C.width;x+=3){
+      var y=wy+Math.sin(x*w.freq+t*w.speed+w.phase)*amp
+               +Math.sin(x*w.freq*2.1+t*w.speed*1.3+w.phase)*amp*0.28
+               +Math.sin(x*w.freq*0.5+t*w.speed*0.6+w.phase)*amp*0.15;
+      ctx.lineTo(x,y);
     }
-  }
+    ctx.lineTo(C.width,wy);ctx.closePath();
+    var gr=ctx.createLinearGradient(0,wy-amp*2.5,0,wy+amp*2.5);
+    gr.addColorStop(0,w.col+(w.base*0.4*(1+mb))+')');
+    gr.addColorStop(0.5,w.col+(w.base*(1+mb*1.8))+')');
+    gr.addColorStop(1,w.col+'0)');
+    ctx.fillStyle=gr;ctx.fill();
 
-  // Ripples on mouse move
+    ctx.beginPath();
+    for(var x=0;x<=C.width;x+=3){
+      var y=wy+Math.sin(x*w.freq+t*w.speed+w.phase)*amp
+               +Math.sin(x*w.freq*2.1+t*w.speed*1.3+w.phase)*amp*0.28
+               +Math.sin(x*w.freq*0.5+t*w.speed*0.6+w.phase)*amp*0.15;
+      x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.strokeStyle=w.col+(0.28+mb*0.55+sb*0.3)+')';
+    ctx.lineWidth=0.8+mb*1.8;ctx.stroke();
+
+    // Pulse dots near cursor
+    for(var x=40;x<C.width;x+=55){
+      var y=wy+Math.sin(x*w.freq+t*w.speed+w.phase)*amp;
+      var pd=Math.hypot(x-mx,y-my);
+      if(pd<90){
+        var pa=1-pd/90;
+        ctx.beginPath();ctx.arc(x,y,1.5+pa*3.5,0,Math.PI*2);
+        ctx.fillStyle=w.col+(0.5+pa*0.5)+')';ctx.fill();
+      }
+    }
+  });
+
+  // Oscilloscope scan line
+  scanX+=1.8;if(scanX>C.width)scanX=0;
+  var sg=ctx.createLinearGradient(scanX-40,0,scanX+6,0);
+  sg.addColorStop(0,'rgba(0,212,170,0)');
+  sg.addColorStop(0.6,'rgba(0,212,170,0.04)');
+  sg.addColorStop(1,'rgba(0,212,170,0.12)');
+  ctx.fillStyle=sg;ctx.fillRect(scanX-40,0,46,C.height);
+
+  // Crosshair
+  ctx.beginPath();ctx.moveTo(mx,0);ctx.lineTo(mx,C.height);
+  ctx.strokeStyle='rgba(0,212,170,0.05)';ctx.lineWidth=1;ctx.stroke();
+  ctx.beginPath();ctx.moveTo(0,my);ctx.lineTo(C.width,my);
+  ctx.strokeStyle='rgba(0,212,170,0.05)';ctx.lineWidth=1;ctx.stroke();
+
+  // Hex ripples
   hexRipples=hexRipples.filter(function(r){return r.life>0;});
   hexRipples.forEach(function(r){
-    r.life-=0.018; r.size+=1.8;
-    drawHex(r.x,r.y,r.size,r.life*0.25,r.rot);
-    drawHex(r.x,r.y,r.size*0.6,r.life*0.15,r.rot+Math.PI/6);
+    r.life-=0.02;r.size+=2.2;
+    drawHex(r.x,r.y,r.size,r.life*0.28,r.rot);
+    drawHex(r.x,r.y,r.size*0.55,r.life*0.14,r.rot+0.52);
   });
-
-  var MDIST=110;
-  stars.forEach(function(s,i){
-    s.x+=s.vx; s.y+=s.vy;
-    if(s.x<0||s.x>cv.width)  s.vx*=-1;
-    if(s.y<0||s.y>cv.height) s.vy*=-1;
-    s.pulse+=0.018;
-
-    var dm=Math.hypot(s.x-mx,s.y-my);
-    var pull=Math.max(0,1-dm/MDIST)*0.55;
-    s.x+=(mx-s.x)*pull*0.01;
-    s.y+=(my-s.y)*pull*0.01;
-
-    var glow=0.35+0.25*Math.sin(s.pulse);
-
-    // Draw star
-    ctx.beginPath();
-    ctx.arc(s.x,s.y,s.r+(pull>0.2?pull*2.5:0),0,Math.PI*2);
-    if(dm<MDIST){
-      ctx.fillStyle='rgba(0,212,170,'+(glow*0.8+pull*0.5)+')';
-    } else if(s.bright){
-      ctx.fillStyle='rgba(180,210,255,'+glow*0.7+')';
-    } else {
-      ctx.fillStyle='rgba(80,100,150,'+glow*0.35+')';
-    }
-    ctx.fill();
-
-    // Hex ring near cursor
-    if(pull>0.15) drawHex(s.x,s.y,5+pull*12,pull*0.3,t+i);
-
-    // Connect nearby stars
-    for(var j=i+1;j<stars.length;j++){
-      var d=Math.hypot(s.x-stars[j].x,s.y-stars[j].y);
-      if(d<95){
-        var dj=Math.hypot(stars[j].x-mx,stars[j].y-my);
-        var base=0.07*(1-d/95);
-        var boost=(dm<MDIST||dj<MDIST)?0.25:0;
-        ctx.beginPath();
-        ctx.moveTo(s.x,s.y); ctx.lineTo(stars[j].x,stars[j].y);
-        ctx.strokeStyle='rgba(0,212,170,'+(base+boost)+')';
-        ctx.lineWidth=boost>0?0.8:0.35;
-        ctx.stroke();
-      }
-    }
-
-    // Label near cursor
-    if(s.label){
-      var fade=Math.max(0,1-dm/130);
-      if(fade>0.05){
-        ctx.font=(10+fade*5)+'px monospace';
-        ctx.fillStyle='rgba(0,212,170,'+fade*0.85+')';
-        ctx.fillText(s.label,s.x+s.r+6,s.y-s.r-3);
-      }
-    }
-  });
-
-  // Shooting star
-  if(Math.random()<0.003){
-    var sx=Math.random()*cv.width, sy=Math.random()*cv.height*0.5;
-    var len=60+Math.random()*80;
-    ctx.beginPath();
-    ctx.moveTo(sx,sy); ctx.lineTo(sx+len,sy+len*0.3);
-    var g=ctx.createLinearGradient(sx,sy,sx+len,sy+len*0.3);
-    g.addColorStop(0,'rgba(0,212,170,0)');
-    g.addColorStop(0.5,'rgba(0,212,170,0.6)');
-    g.addColorStop(1,'rgba(0,212,170,0)');
-    ctx.strokeStyle=g; ctx.lineWidth=1; ctx.stroke();
-  }
 
   requestAnimationFrame(frame);
 }
 frame();
 
-// Mouse
 document.addEventListener('mousemove',function(e){
-  mx=e.clientX; my=e.clientY;
-  cur.style.left=e.clientX+'px'; cur.style.top=e.clientY+'px';
-  ring.style.left=e.clientX+'px'; ring.style.top=e.clientY+'px';
-
+  mx=e.clientX;my=e.clientY;
+  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+  ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';
   var now=Date.now();
-  if(now-lastHex>120){
-    lastHex=now;
-    hexRipples.push({x:mx,y:my,size:4,life:0.8,rot:Math.random()*Math.PI});
-  }
-
-  // Tooltip near labelled star
-  var near=null, nearD=9999;
-  stars.forEach(function(s){
-    if(!s.label) return;
-    var d=Math.hypot(s.x-mx,s.y-my);
-    if(d<nearD){nearD=d;near=s;}
-  });
-  if(near&&nearD<35){
-    tip.style.opacity='1';
-    tip.style.left=(mx+18)+'px'; tip.style.top=(my-22)+'px';
-    tip.textContent=near.label;
-  } else { tip.style.opacity='0'; }
+  if(now-lastHex>105){lastHex=now;hexRipples.push({x:mx,y:my,size:3,life:0.65,rot:Math.random()*3.14});}
 });
 
-// Click burst
 document.addEventListener('click',function(e){
-  for(var i=0;i<5;i++){
-    hexRipples.push({x:e.clientX,y:e.clientY,size:2+i*4,life:0.9-i*0.12,rot:i*Math.PI/5});
-  }
-  // Cursor flash
-  cur.style.width='18px'; cur.style.height='18px';
-  ring.style.width='50px'; ring.style.height='50px';
-  setTimeout(function(){cur.style.width='8px';cur.style.height='8px';ring.style.width='28px';ring.style.height='28px';},200);
+  surge=1;
+  for(var i=0;i<6;i++) hexRipples.push({x:e.clientX,y:e.clientY,size:2+i*7,life:1-i*0.1,rot:i*0.52});
+  cur.style.width='18px';cur.style.height='18px';
+  ring.style.width='55px';ring.style.height='55px';
+  setTimeout(function(){cur.style.width='8px';cur.style.height='8px';ring.style.width='28px';ring.style.height='28px';},220);
 });
 })();
 </script>
 """, height=0)
 
 # ─────────────────────────────────────────────
-#  TAPE + HELPERS
+#  SHARED HELPERS
 # ─────────────────────────────────────────────
-TAPE = """
-<div class="ib-tape-outer"><div class="ib-tape">
+TAPE="""<div class="ib-tape-outer"><div class="ib-tape">
 <div class="ib-tape-item">AAPL <span class="up">+1.24%</span></div>
 <div class="ib-tape-item">MSFT <span class="dn">-0.38%</span></div>
 <div class="ib-tape-item">NVDA <span class="up">+3.11%</span></div>
@@ -391,11 +289,11 @@ TAPE = """
 <div class="ib-tape-item">JPM <span class="up">+0.63%</span></div>
 </div></div>"""
 
-CHART_THEME = dict(
-    paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-    font=dict(family="Space Grotesk, sans-serif", color="#8892a4"),
-    xaxis=dict(gridcolor="rgba(255,255,255,0.04)", zerolinecolor="rgba(255,255,255,0.04)"),
-    yaxis=dict(gridcolor="rgba(255,255,255,0.04)", zerolinecolor="rgba(255,255,255,0.04)"),
+CHART_THEME=dict(
+    paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(0,0,0,0)",
+    font=dict(family="Space Grotesk, sans-serif",color="#8892a4"),
+    xaxis=dict(gridcolor="rgba(255,255,255,0.04)",zerolinecolor="rgba(255,255,255,0.04)"),
+    yaxis=dict(gridcolor="rgba(255,255,255,0.04)",zerolinecolor="rgba(255,255,255,0.04)"),
     margin=dict(l=10,r=10,t=40,b=10),
 )
 
@@ -417,26 +315,21 @@ def fmt_p(v):
         if v is None or np.isnan(float(v)): return "N/A"
         return f"${float(v):,.2f}"
     except: return "N/A"
-def fmt_pct(v):
-    try:
-        if v is None or np.isnan(float(v)): return "N/A"
-        return f"{float(v)*100:.2f}%"
-    except: return "N/A"
-def sfmt(x, fn):
+def sfmt(x,fn):
     try: return fn(float(x)) if x is not None and not np.isnan(float(x)) else "N/A"
     except: return "N/A"
-def fmt_bench(c, v):
+def fmt_bench(c,v):
     try:
         if np.isnan(float(v)): return "N/A"
         return f"{float(v)*100:.1f}%" if c=="FCF Yield" else f"{float(v):.1f}x"
     except: return "N/A"
-def card(label, value, color=""):
-    st.markdown(f"<div class='ib-card'><div class='ib-card-label'>{label}</div><div class='ib-card-value {color}'>{value}</div></div>", unsafe_allow_html=True)
+def card(label,value,color=""):
+    st.markdown(f"<div class='ib-card'><div class='ib-card-label'>{label}</div><div class='ib-card-value {color}'>{value}</div></div>",unsafe_allow_html=True)
 def section(text):
-    st.markdown(f"<div class='ib-section'>{text}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='ib-section'>{text}</div>",unsafe_allow_html=True)
 
 # ─────────────────────────────────────────────
-#  SIDEBAR
+#  SIDEBAR NAV
 # ─────────────────────────────────────────────
 with st.sidebar:
     st.markdown("""
@@ -447,27 +340,27 @@ with st.sidebar:
         <div style='font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:#2a3044;margin-top:0.3rem;'>
             Investment Banking Suite
         </div>
-    </div>""", unsafe_allow_html=True)
+    </div>""",unsafe_allow_html=True)
     st.divider()
-    page = st.radio("", [
+    page=st.radio("",[
         "📊  DCF Valuation",
         "🏢  Comparable Companies",
         "📑  3-Statement Model",
         "🔍  Earnings Screener",
-    ], label_visibility="collapsed")
+    ],label_visibility="collapsed")
     st.divider()
-    st.markdown("<div style='font-size:0.65rem;color:#2a3044;line-height:1.6;'>Data via Yahoo Finance<br>For educational use only</div>", unsafe_allow_html=True)
+    st.markdown("<div style='font-size:0.65rem;color:#2a3044;line-height:1.6;'>Data via Yahoo Finance<br>For educational use only</div>",unsafe_allow_html=True)
 
 
 # ══════════════════════════════════════════════════════════════
 #  PAGE 1 — DCF VALUATION
 # ══════════════════════════════════════════════════════════════
-if page == "📊  DCF Valuation":
+if page=="📊  DCF Valuation":
 
-    @st.cache_data(ttl=300, show_spinner=False)
+    @st.cache_data(ttl=300,show_spinner=False)
     def fetch_dcf(ticker):
-        tk=yf.Ticker(ticker); info=tk.info
-        cashflow=tk.cashflow; balance=tk.balance_sheet
+        tk=yf.Ticker(ticker);info=tk.info
+        cashflow=tk.cashflow;balance=tk.balance_sheet
         if not info or not info.get("regularMarketPrice"):
             raise ValueError(f"No data found for '{ticker}'.")
         fcf_history,fcf_years=[],[]
@@ -496,7 +389,7 @@ if page == "📊  DCF Valuation":
     def est_growth(hist,yrs=5):
         d=[f for f in hist if f and not np.isnan(f)]
         if len(d)<2: return 0.08
-        d=d[-(yrs+1):]; s,e,n=d[0],d[-1],len(d)-1
+        d=d[-(yrs+1):];s,e,n=d[0],d[-1],len(d)-1
         if s<=0 or e<=0:
             pos=[f for f in d if f>0]
             return ((pos[-1]/pos[0])**(1/(len(pos)-1))-1) if len(pos)>=2 else 0.08
@@ -506,14 +399,14 @@ if page == "📊  DCF Valuation":
         yl=list(range(1,yrs+1))
         pf=[bf*(1+gr)**y for y in yl]
         df=[f/(1+wacc)**y for y,f in zip(yl,pf)]
-        tv=pf[-1]*(1+tgr)/(wacc-tgr); dtv=tv/(1+wacc)**yrs
-        pv=sum(df); ev=pv+dtv; eq=ev-nd
+        tv=pf[-1]*(1+tgr)/(wacc-tgr);dtv=tv/(1+wacc)**yrs
+        pv=sum(df);ev=pv+dtv;eq=ev-nd
         return {"years":yl,"proj_fcf":pf,"disc_fcf":df,"pv_fcf":pv,
                 "terminal_val":tv,"disc_terminal":dtv,"enterprise_value":ev,
                 "equity_value":eq,"intrinsic_per_share":eq/sh if sh else 0}
 
     with st.sidebar:
-        st.markdown("<div style='font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:#00d4aa;margin-bottom:0.75rem;'>DCF Settings</div>", unsafe_allow_html=True)
+        st.markdown("<div style='font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:#00d4aa;margin-bottom:0.75rem;'>DCF Settings</div>",unsafe_allow_html=True)
         dcf_ticker=st.text_input("Ticker symbol","AAPL",key="dcf_t").strip().upper()
         dcf_run=st.button("▶  Run DCF",type="primary",use_container_width=True,key="dcf_r")
         wacc=st.slider("WACC (%)",5.0,20.0,10.0,0.5,key="dcf_w")/100
@@ -523,28 +416,28 @@ if page == "📊  DCF Valuation":
         override=st.checkbox("Override growth rate",key="dcf_ov")
         manual_gr=st.slider("FCF Growth (%)",-10.0,40.0,10.0,0.5,key="dcf_mg")/100 if override else None
 
-    st.markdown("<div class='ib-hero'><div class='ib-hero-eyebrow'>Module 01</div><div class='ib-hero-title'>DCF <em>Valuation</em></div><div class='ib-hero-sub'>Discounted Cash Flow · Intrinsic Value · Sensitivity Analysis</div></div>", unsafe_allow_html=True)
-    st.markdown(TAPE, unsafe_allow_html=True)
+    st.markdown("<div class='ib-hero'><div class='ib-hero-eyebrow'>Module 01</div><div class='ib-hero-title'>DCF <em>Valuation</em></div><div class='ib-hero-sub'>Discounted Cash Flow · Intrinsic Value · Sensitivity Analysis</div></div>",unsafe_allow_html=True)
+    st.markdown(TAPE,unsafe_allow_html=True)
 
     if dcf_run or "dcf_data" in st.session_state:
         if dcf_run:
             with st.spinner(f"Fetching {dcf_ticker}…"):
                 try:
-                    d=fetch_dcf(dcf_ticker); st.session_state["dcf_data"]=d
+                    d=fetch_dcf(dcf_ticker);st.session_state["dcf_data"]=d
                 except Exception as e:
-                    st.error(f"❌ {e}"); st.stop()
+                    st.error(f"❌ {e}");st.stop()
         d=st.session_state["dcf_data"]
-        if not d["fcf_history"]: st.error("No FCF data."); st.stop()
+        if not d["fcf_history"]: st.error("No FCF data.");st.stop()
 
         bf_auto=d["fcf_history"][-1]
         gr=manual_gr if manual_gr is not None else est_growth(d["fcf_history"])
         bf=bf_auto if bf_auto>0 else np.mean([f for f in d["fcf_history"] if f>0] or [0])
-        if bf<=0: st.error("No positive FCF."); st.stop()
-        if wacc<=tgr: st.error("WACC must exceed terminal growth."); st.stop()
+        if bf<=0: st.error("No positive FCF.");st.stop()
+        if wacc<=tgr: st.error("WACC must exceed terminal growth.");st.stop()
 
         res=run_dcf(bf,gr,wacc,tgr,proj_yrs,d["net_debt"],d["shares"])
-        intrinsic=res["intrinsic_per_share"]; mos_price=intrinsic*(1-mos)
-        price=d["current_price"]; upside=(intrinsic-price)/price
+        intrinsic=res["intrinsic_per_share"];mos_price=intrinsic*(1-mos)
+        price=d["current_price"];upside=(intrinsic-price)/price
 
         section(f"{d['name']} <em>·</em> <span style='font-size:1rem;color:#4a5568;'>{d['sector']}</span>")
         if d["description"]:
@@ -552,11 +445,11 @@ if page == "📊  DCF Valuation":
                 st.write(d["description"][:500]+"…")
 
         if upside>0.25:
-            st.markdown(f"<div class='ib-verdict under'>✔  Potentially Undervalued — {upside*100:.1f}% above market price</div>", unsafe_allow_html=True)
+            st.markdown(f"<div class='ib-verdict under'>✔  Potentially Undervalued — {upside*100:.1f}% above market price</div>",unsafe_allow_html=True)
         elif upside<-0.25:
-            st.markdown(f"<div class='ib-verdict over'>✘  Potentially Overvalued — {abs(upside)*100:.1f}% below market price</div>", unsafe_allow_html=True)
+            st.markdown(f"<div class='ib-verdict over'>✘  Potentially Overvalued — {abs(upside)*100:.1f}% below market price</div>",unsafe_allow_html=True)
         else:
-            st.markdown(f"<div class='ib-verdict fair'>~  Fairly Valued ({upside*100:+.1f}%)</div>", unsafe_allow_html=True)
+            st.markdown(f"<div class='ib-verdict fair'>~  Fairly Valued ({upside*100:+.1f}%)</div>",unsafe_allow_html=True)
 
         c1,c2,c3,c4,c5=st.columns(5)
         with c1: card("Current Price",fmt_p(price))
@@ -616,7 +509,7 @@ if page == "📊  DCF Valuation":
                 "Value":[fmt_m(res["pv_fcf"]),fmt_m(res["disc_terminal"]),fmt_m(res["enterprise_value"]),fmt_m(d["net_debt"]),fmt_m(res["equity_value"]),fmt_p(intrinsic)]})
             st.dataframe(s,use_container_width=True,hide_index=True)
 
-        st.markdown("<div class='ib-disclaimer'>⚠ For educational purposes only. Not financial advice.</div>", unsafe_allow_html=True)
+        st.markdown("<div class='ib-disclaimer'>⚠ For educational purposes only. Not financial advice.</div>",unsafe_allow_html=True)
     else:
         st.markdown("""<div class='ib-landing'>
             <div class='ib-landing-title'>Discounted<br><em>Cash Flow</em></div>
@@ -630,13 +523,13 @@ if page == "📊  DCF Valuation":
                 <div class='ib-stat'><span class='ib-stat-num'>Live</span><span class='ib-stat-lbl'>Market Data</span></div>
                 <div class='ib-stat'><span class='ib-stat-num'>Free</span><span class='ib-stat-lbl'>No API Key</span></div>
             </div>
-        </div>""", unsafe_allow_html=True)
+        </div>""",unsafe_allow_html=True)
 
 
 # ══════════════════════════════════════════════════════════════
 #  PAGE 2 — COMPARABLE COMPANIES
 # ══════════════════════════════════════════════════════════════
-elif page == "🏢  Comparable Companies":
+elif page=="🏢  Comparable Companies":
     SECTORS={
         "Technology (US)":  ["AAPL","MSFT","GOOGL","META","NVDA","ORCL","CRM","ADBE","INTC","AMD","QCOM","TXN","AVGO","NOW","SNOW"],
         "Banking (US)":     ["JPM","BAC","WFC","GS","MS","C","USB","PNC","TFC","COF","SCHW","BK","STT","AXP","DFS"],
@@ -646,24 +539,24 @@ elif page == "🏢  Comparable Companies":
         "UK Large Cap":     ["SHEL.L","BP.L","HSBA.L","ULVR.L","AZN.L","GSK.L","DGE.L","RIO.L","BHP.L","VOD.L","LLOY.L","BARC.L","NWG.L"],
     }
     with st.sidebar:
-        st.markdown("<div style='font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:#00d4aa;margin-bottom:0.75rem;'>Comps Settings</div>", unsafe_allow_html=True)
+        st.markdown("<div style='font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:#00d4aa;margin-bottom:0.75rem;'>Comps Settings</div>",unsafe_allow_html=True)
         sector=st.selectbox("Sector",list(SECTORS.keys()),key="comp_s")
         custom=st.text_input("Or enter tickers (comma-separated)",key="comp_c",placeholder="AAPL, MSFT, GOOGL")
         cr=st.button("▶  Run Comps",type="primary",use_container_width=True,key="comp_r")
 
-    st.markdown("<div class='ib-hero'><div class='ib-hero-eyebrow'>Module 02</div><div class='ib-hero-title'>Comparable <em>Companies</em></div><div class='ib-hero-sub'>EV/EBITDA · P/E · Debt/EBITDA · FCF Yield · Revenue Multiples</div></div>", unsafe_allow_html=True)
-    st.markdown(TAPE, unsafe_allow_html=True)
+    st.markdown("<div class='ib-hero'><div class='ib-hero-eyebrow'>Module 02</div><div class='ib-hero-title'>Comparable <em>Companies</em></div><div class='ib-hero-sub'>EV/EBITDA · P/E · Debt/EBITDA · FCF Yield · Revenue Multiples</div></div>",unsafe_allow_html=True)
+    st.markdown(TAPE,unsafe_allow_html=True)
 
-    @st.cache_data(ttl=300, show_spinner=False)
+    @st.cache_data(ttl=300,show_spinner=False)
     def fetch_comps(tickers):
         rows=[]
         for t in tickers:
             try:
                 info=yf.Ticker(t).info
-                mc=safe_float(info.get("marketCap")); ev=safe_float(info.get("enterpriseValue"))
-                eb=safe_float(info.get("ebitda")); rv=safe_float(info.get("totalRevenue"))
-                pe=safe_float(info.get("trailingPE")); fp=safe_float(info.get("forwardPE"))
-                db=safe_float(info.get("totalDebt")); fc=safe_float(info.get("freeCashflow"))
+                mc=safe_float(info.get("marketCap"));ev=safe_float(info.get("enterpriseValue"))
+                eb=safe_float(info.get("ebitda"));rv=safe_float(info.get("totalRevenue"))
+                pe=safe_float(info.get("trailingPE"));fp=safe_float(info.get("forwardPE"))
+                db=safe_float(info.get("totalDebt"));fc=safe_float(info.get("freeCashflow"))
                 pr=safe_float(info.get("regularMarketPrice") or info.get("currentPrice"))
                 rows.append({"Ticker":t,"Company":info.get("longName",t)[:28],"Price":pr,
                              "Mkt Cap":mc/1e9 if mc else np.nan,
@@ -682,19 +575,19 @@ elif page == "🏢  Comparable Companies":
                 df=fetch_comps(tuple(tks))
                 st.session_state["comp_df"]=df
                 st.session_state["comp_sn"]=sector if not custom.strip() else "Custom"
-        df=st.session_state["comp_df"]; sn=st.session_state.get("comp_sn","")
+        df=st.session_state["comp_df"];sn=st.session_state.get("comp_sn","")
 
         section(f"Comps Table <em>·</em> <span style='font-size:1rem;color:#4a5568;'>{sn}</span>")
         disp=df.copy()
-        if "Price"    in disp.columns: disp["Price"]    =disp["Price"].apply(lambda x: sfmt(x,lambda v:f"${v:,.2f}"))
-        if "Mkt Cap"  in disp.columns: disp["Mkt Cap"]  =disp["Mkt Cap"].apply(lambda x: sfmt(x,lambda v:f"${v:,.1f}B"))
+        if "Price"    in disp.columns: disp["Price"]   =disp["Price"].apply(lambda x:sfmt(x,lambda v:f"${v:,.2f}"))
+        if "Mkt Cap"  in disp.columns: disp["Mkt Cap"] =disp["Mkt Cap"].apply(lambda x:sfmt(x,lambda v:f"${v:,.1f}B"))
         for c in ["EV/EBITDA","EV/Revenue","P/E","P/E Fwd","Debt/EBITDA"]:
-            if c in disp.columns: disp[c]=disp[c].apply(lambda x: sfmt(x,lambda v:f"{v:.1f}×"))
-        if "FCF Yield" in disp.columns: disp["FCF Yield"]=disp["FCF Yield"].apply(lambda x: sfmt(x,lambda v:f"{v*100:.1f}%"))
+            if c in disp.columns: disp[c]=disp[c].apply(lambda x:sfmt(x,lambda v:f"{v:.1f}×"))
+        if "FCF Yield" in disp.columns: disp["FCF Yield"]=disp["FCF Yield"].apply(lambda x:sfmt(x,lambda v:f"{v*100:.1f}%"))
         st.dataframe(disp,use_container_width=True,hide_index=True)
 
         nc=[c for c in ["EV/EBITDA","EV/Revenue","P/E","P/E Fwd","Debt/EBITDA","FCF Yield"] if c in df.columns]
-        med={c:df[c].median() for c in nc}; mn={c:df[c].mean() for c in nc}
+        med={c:df[c].median() for c in nc};mn={c:df[c].mean() for c in nc}
         section("Sector <em>Benchmarks</em>")
         bd=pd.DataFrame({"Metric":nc,"Median":[fmt_bench(c,med[c]) for c in nc],"Mean":[fmt_bench(c,mn[c]) for c in nc]})
         st.dataframe(bd,use_container_width=True,hide_index=True)
@@ -710,7 +603,7 @@ elif page == "🏢  Comparable Companies":
             fig.update_layout(**CHART_THEME,title="EV/EBITDA",title_font=dict(size=13,color="#e8eaf0"))
             st.plotly_chart(fig,use_container_width=True)
         with c2:
-            pd2=df.dropna(subset=["P/E"]); pd2=pd2[pd2["P/E"]<100]
+            pd2=df.dropna(subset=["P/E"]);pd2=pd2[pd2["P/E"]<100]
             fig2=go.Figure(go.Bar(x=pd2["Ticker"],y=pd2["P/E"],
                 marker_color=["#00d4aa" if v<med["P/E"] else "#ff6b6b" for v in pd2["P/E"]],
                 text=[f"{v:.1f}×" for v in pd2["P/E"]],textposition="outside",textfont=dict(size=10,color="#8892a4")))
@@ -736,7 +629,7 @@ elif page == "🏢  Comparable Companies":
             fig4.update_layout(**CHART_THEME,title="FCF Yield",title_font=dict(size=13,color="#e8eaf0"))
             st.plotly_chart(fig4,use_container_width=True)
 
-        st.markdown("<div class='ib-disclaimer'>⚠ For educational purposes only. Not financial advice.</div>", unsafe_allow_html=True)
+        st.markdown("<div class='ib-disclaimer'>⚠ For educational purposes only. Not financial advice.</div>",unsafe_allow_html=True)
     else:
         st.markdown("""<div class='ib-landing'>
             <div class='ib-landing-title'>Comparable<br><em>Companies</em></div>
@@ -750,18 +643,18 @@ elif page == "🏢  Comparable Companies":
                 <div class='ib-stat'><span class='ib-stat-num'>15</span><span class='ib-stat-lbl'>Peers/Sector</span></div>
                 <div class='ib-stat'><span class='ib-stat-num'>6</span><span class='ib-stat-lbl'>Multiples</span></div>
             </div>
-        </div>""", unsafe_allow_html=True)
+        </div>""",unsafe_allow_html=True)
 
 
 # ══════════════════════════════════════════════════════════════
 #  PAGE 3 — 3-STATEMENT MODEL
 # ══════════════════════════════════════════════════════════════
-elif page == "📑  3-Statement Model":
+elif page=="📑  3-Statement Model":
     with st.sidebar:
-        st.markdown("<div style='font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:#00d4aa;margin-bottom:0.75rem;'>Model Settings</div>", unsafe_allow_html=True)
+        st.markdown("<div style='font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:#00d4aa;margin-bottom:0.75rem;'>Model Settings</div>",unsafe_allow_html=True)
         stmt_t=st.text_input("Ticker symbol","AAPL",key="stmt_t").strip().upper()
         stmt_r=st.button("▶  Load Statements",type="primary",use_container_width=True,key="stmt_r")
-        st.markdown("<div style='font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:#00d4aa;margin:1rem 0 0.75rem;'>Forecast Assumptions</div>", unsafe_allow_html=True)
+        st.markdown("<div style='font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:#00d4aa;margin:1rem 0 0.75rem;'>Forecast Assumptions</div>",unsafe_allow_html=True)
         rev_gr   =st.slider("Revenue Growth (%)",-10.0,40.0,8.0,0.5,key="rg")/100
         op_margin=st.slider("Operating Margin (%)",1.0,50.0,20.0,0.5,key="om")/100
         tax_rate =st.slider("Tax Rate (%)",5.0,35.0,21.0,0.5,key="tr")/100
@@ -769,10 +662,10 @@ elif page == "📑  3-Statement Model":
         da_pct   =st.slider("D&A % Revenue",1.0,15.0,4.0,0.5,key="da")/100
         nwc_pct  =st.slider("NWC Change %",-5.0,5.0,1.0,0.5,key="nw")/100
 
-    st.markdown("<div class='ib-hero'><div class='ib-hero-eyebrow'>Module 03</div><div class='ib-hero-title'>3-Statement <em>Model</em></div><div class='ib-hero-sub'>Income Statement · Balance Sheet · Cash Flow · 5-Year Forecast</div></div>", unsafe_allow_html=True)
-    st.markdown(TAPE, unsafe_allow_html=True)
+    st.markdown("<div class='ib-hero'><div class='ib-hero-eyebrow'>Module 03</div><div class='ib-hero-title'>3-Statement <em>Model</em></div><div class='ib-hero-sub'>Income Statement · Balance Sheet · Cash Flow · 5-Year Forecast</div></div>",unsafe_allow_html=True)
+    st.markdown(TAPE,unsafe_allow_html=True)
 
-    @st.cache_data(ttl=300, show_spinner=False)
+    @st.cache_data(ttl=300,show_spinner=False)
     def fetch_stmts(ticker):
         tk=yf.Ticker(ticker)
         return tk.info,tk.income_stmt,tk.balance_sheet,tk.cashflow
@@ -784,7 +677,7 @@ elif page == "📑  3-Statement Model":
                     info,inc,bal,cf=fetch_stmts(stmt_t)
                     st.session_state["stmt_data"]=(info,inc,bal,cf,stmt_t)
                 except Exception as e:
-                    st.error(f"❌ {e}"); st.stop()
+                    st.error(f"❌ {e}");st.stop()
         info,inc,bal,cf,lt=st.session_state["stmt_data"]
         section(f"{info.get('longName',lt)} <em>·</em> <span style='font-size:1rem;color:#4a5568;'>Historical Statements</span>")
 
@@ -794,9 +687,9 @@ elif page == "📑  3-Statement Model":
             ("Balance Sheet (USD Billions)",bal,["Total Assets","Total Liabilities Net Minority Interest","Stockholders Equity","Total Debt","Cash And Cash Equivalents"]),
         ]:
             try:
-                d2=df_raw.copy(); d2.columns=[str(c.year) for c in d2.columns]
-                d2=(d2/1e9).round(2); filt=d2.loc[[r for r in rows if r in d2.index]]
-                st.markdown(f"<div style='font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:#00d4aa;margin:1.5rem 0 0.5rem;'>{label}</div>", unsafe_allow_html=True)
+                d2=df_raw.copy();d2.columns=[str(c.year) for c in d2.columns]
+                d2=(d2/1e9).round(2);filt=d2.loc[[r for r in rows if r in d2.index]]
+                st.markdown(f"<div style='font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:#00d4aa;margin:1.5rem 0 0.5rem;'>{label}</div>",unsafe_allow_html=True)
                 st.dataframe(filt,use_container_width=True)
             except: pass
 
@@ -804,19 +697,19 @@ elif page == "📑  3-Statement Model":
         try:
             br=None
             for rn in ["Total Revenue","Revenue"]:
-                try: br=float(inc.loc[rn].iloc[0]); break
+                try: br=float(inc.loc[rn].iloc[0]);break
                 except: continue
             if br is None or np.isnan(br): raise ValueError
         except:
-            st.error("Could not extract base revenue."); st.stop()
+            st.error("Could not extract base revenue.");st.stop()
 
         yrs=["Y+1","Y+2","Y+3","Y+4","Y+5"]
         revs,ops,ebs,nets,fcfs=[],[],[],[],[]
         r=br
         for _ in range(5):
-            r*=(1+rev_gr); oi=r*op_margin; eb=oi+r*da_pct
-            ni=oi*(1-tax_rate); fc=ni+r*da_pct-r*capex_pct-r*nwc_pct
-            revs.append(r/1e9); ops.append(oi/1e9); ebs.append(eb/1e9); nets.append(ni/1e9); fcfs.append(fc/1e9)
+            r*=(1+rev_gr);oi=r*op_margin;eb=oi+r*da_pct
+            ni=oi*(1-tax_rate);fc=ni+r*da_pct-r*capex_pct-r*nwc_pct
+            revs.append(r/1e9);ops.append(oi/1e9);ebs.append(eb/1e9);nets.append(ni/1e9);fcfs.append(fc/1e9)
 
         fd=pd.DataFrame({"Year":yrs,"Revenue ($B)":[f"${v:.2f}B" for v in revs],
             "Op. Income ($B)":[f"${v:.2f}B" for v in ops],"EBITDA ($B)":[f"${v:.2f}B" for v in ebs],
@@ -855,7 +748,7 @@ elif page == "📑  3-Statement Model":
                             xaxis_title="Revenue Growth →",yaxis_title="Operating Margin →")
         st.plotly_chart(fig_s,use_container_width=True)
         st.caption("How Year 5 Free Cash Flow changes across different growth and margin scenarios")
-        st.markdown("<div class='ib-disclaimer'>⚠ For educational purposes only. Not financial advice.</div>", unsafe_allow_html=True)
+        st.markdown("<div class='ib-disclaimer'>⚠ For educational purposes only. Not financial advice.</div>",unsafe_allow_html=True)
     else:
         st.markdown("""<div class='ib-landing'>
             <div class='ib-landing-title'>3-Statement<br><em>Model</em></div>
@@ -864,13 +757,13 @@ elif page == "📑  3-Statement Model":
                 <div class='ib-pill'>Income Statement</div><div class='ib-pill'>Balance Sheet</div>
                 <div class='ib-pill'>Cash Flow</div><div class='ib-pill'>Sensitivity Heatmap</div>
             </div>
-        </div>""", unsafe_allow_html=True)
+        </div>""",unsafe_allow_html=True)
 
 
 # ══════════════════════════════════════════════════════════════
 #  PAGE 4 — EARNINGS SCREENER
 # ══════════════════════════════════════════════════════════════
-elif page == "🔍  Earnings Screener":
+elif page=="🔍  Earnings Screener":
     SP500=["AAPL","MSFT","GOOGL","AMZN","NVDA","META","BRK-B","LLY","AVGO","JPM",
            "TSLA","UNH","XOM","V","MA","JNJ","PG","HD","COST","MRK",
            "ABBV","CVX","KO","PEP","ADBE","WMT","CRM","BAC","TMO","ORCL",
@@ -882,27 +775,27 @@ elif page == "🔍  Earnings Screener":
            "F","GM","BA","MMM","DIS","NFLX","PYPL","INTC","AMD","TXN"]
 
     with st.sidebar:
-        st.markdown("<div style='font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:#00d4aa;margin-bottom:0.75rem;'>Screener Filters</div>", unsafe_allow_html=True)
-        max_de  =st.slider("Max Debt/EBITDA",0.5,8.0,3.0,0.5,key="sd")
-        min_fy  =st.slider("Min FCF Yield (%)",0.0,15.0,5.0,0.5,key="sf")/100
-        max_pe  =st.slider("Max P/E",5.0,60.0,25.0,1.0,key="sp")
-        min_cap =st.slider("Min Market Cap ($B)",1.0,100.0,10.0,1.0,key="sc")
-        scan_n  =st.slider("Companies to scan",20,90,50,10,key="sn")
-        scr_run =st.button("▶  Run Screener",type="primary",use_container_width=True,key="sr")
+        st.markdown("<div style='font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:#00d4aa;margin-bottom:0.75rem;'>Screener Filters</div>",unsafe_allow_html=True)
+        max_de =st.slider("Max Debt/EBITDA",0.5,8.0,3.0,0.5,key="sd")
+        min_fy =st.slider("Min FCF Yield (%)",0.0,15.0,5.0,0.5,key="sf")/100
+        max_pe =st.slider("Max P/E",5.0,60.0,25.0,1.0,key="sp")
+        min_cap=st.slider("Min Market Cap ($B)",1.0,100.0,10.0,1.0,key="sc")
+        scan_n =st.slider("Companies to scan",20,90,50,10,key="sn")
+        scr_run=st.button("▶  Run Screener",type="primary",use_container_width=True,key="sr")
 
-    st.markdown("<div class='ib-hero'><div class='ib-hero-eyebrow'>Module 04</div><div class='ib-hero-title'>Earnings <em>Screener</em></div><div class='ib-hero-sub'>Value Criteria · FCF Yield · Debt/EBITDA · S&P 500 Universe</div></div>", unsafe_allow_html=True)
-    st.markdown(TAPE, unsafe_allow_html=True)
+    st.markdown("<div class='ib-hero'><div class='ib-hero-eyebrow'>Module 04</div><div class='ib-hero-title'>Earnings <em>Screener</em></div><div class='ib-hero-sub'>Value Criteria · FCF Yield · Debt/EBITDA · S&P 500 Universe</div></div>",unsafe_allow_html=True)
+    st.markdown(TAPE,unsafe_allow_html=True)
 
     if scr_run:
-        tks=SP500[:scan_n]; prog=st.progress(0,text="Starting scan…"); results=[]
+        tks=SP500[:scan_n];prog=st.progress(0,text="Starting scan…");results=[]
         for i,t in enumerate(tks):
             prog.progress((i+1)/len(tks),text=f"Scanning {t}…")
             try:
                 info=yf.Ticker(t).info
                 mc=safe_float(info.get("marketCap"))
                 if np.isnan(mc) or mc<min_cap*1e9: continue
-                eb=safe_float(info.get("ebitda")); db=safe_float(info.get("totalDebt"))
-                fc=safe_float(info.get("freeCashflow")); pe=safe_float(info.get("trailingPE"))
+                eb=safe_float(info.get("ebitda"));db=safe_float(info.get("totalDebt"))
+                fc=safe_float(info.get("freeCashflow"));pe=safe_float(info.get("trailingPE"))
                 ev=safe_float(info.get("enterpriseValue"))
                 pr=safe_float(info.get("regularMarketPrice") or info.get("currentPrice"))
                 de=db/eb if db and eb and eb>0 else np.nan
@@ -921,7 +814,7 @@ elif page == "🔍  Earnings Screener":
         st.session_state["scr_p"]=(max_de,min_fy,max_pe,min_cap,scan_n)
 
     if "scr_res" in st.session_state:
-        df=st.session_state["scr_res"]; p=st.session_state.get("scr_p",(max_de,min_fy,max_pe,min_cap,scan_n))
+        df=st.session_state["scr_res"];p=st.session_state.get("scr_p",(max_de,min_fy,max_pe,min_cap,scan_n))
         c1,c2,c3,c4=st.columns(4)
         with c1: card("Passed",str(len(df)),"teal")
         with c2: card("Max Debt/EBITDA",f"{p[0]:.1f}×")
@@ -933,12 +826,12 @@ elif page == "🔍  Earnings Screener":
         else:
             section(f"<em>{len(df)}</em> Companies Passed")
             disp=df.copy().sort_values("FCF Yield",ascending=False)
-            disp["Price"]       =disp["Price"].apply(lambda x: sfmt(x,lambda v:f"${v:,.2f}"))
-            disp["Mkt Cap ($B)"]=disp["Mkt Cap ($B)"].apply(lambda x: sfmt(x,lambda v:f"${v:,.1f}B"))
-            disp["P/E"]         =disp["P/E"].apply(lambda x: sfmt(x,lambda v:f"{v:.1f}×"))
-            disp["EV/EBITDA"]   =disp["EV/EBITDA"].apply(lambda x: sfmt(x,lambda v:f"{v:.1f}×"))
-            disp["Debt/EBITDA"] =disp["Debt/EBITDA"].apply(lambda x: sfmt(x,lambda v:f"{v:.1f}×"))
-            disp["FCF Yield"]   =disp["FCF Yield"].apply(lambda x: sfmt(x,lambda v:f"{v*100:.1f}%"))
+            disp["Price"]       =disp["Price"].apply(lambda x:sfmt(x,lambda v:f"${v:,.2f}"))
+            disp["Mkt Cap ($B)"]=disp["Mkt Cap ($B)"].apply(lambda x:sfmt(x,lambda v:f"${v:,.1f}B"))
+            disp["P/E"]         =disp["P/E"].apply(lambda x:sfmt(x,lambda v:f"{v:.1f}×"))
+            disp["EV/EBITDA"]   =disp["EV/EBITDA"].apply(lambda x:sfmt(x,lambda v:f"{v:.1f}×"))
+            disp["Debt/EBITDA"] =disp["Debt/EBITDA"].apply(lambda x:sfmt(x,lambda v:f"{v:.1f}×"))
+            disp["FCF Yield"]   =disp["FCF Yield"].apply(lambda x:sfmt(x,lambda v:f"{v*100:.1f}%"))
             st.dataframe(disp,use_container_width=True,hide_index=True)
 
             section("Visual <em>Analysis</em>")
@@ -960,7 +853,7 @@ elif page == "🔍  Earnings Screener":
                 st.plotly_chart(fig2,use_container_width=True)
 
             section("Sector <em>Breakdown</em>")
-            sc=df["Sector"].value_counts().reset_index(); sc.columns=["Sector","Count"]
+            sc=df["Sector"].value_counts().reset_index();sc.columns=["Sector","Count"]
             fig3=go.Figure(go.Pie(labels=sc["Sector"],values=sc["Count"],hole=0.4,
                 marker=dict(colors=["#00d4aa","#2563eb","#f6ad55","#ff6b6b","#8892a4","#a78bfa","#34d399","#fb923c","#60a5fa","#f472b6"]),
                 textfont=dict(color="#e8eaf0",size=12)))
@@ -968,7 +861,7 @@ elif page == "🔍  Earnings Screener":
             st.plotly_chart(fig3,use_container_width=True)
             st.info("💡 Take any ticker from the results and run a full DCF on the 📊 DCF Valuation page.")
 
-        st.markdown("<div class='ib-disclaimer'>⚠ For educational purposes only. Not financial advice.</div>", unsafe_allow_html=True)
+        st.markdown("<div class='ib-disclaimer'>⚠ For educational purposes only. Not financial advice.</div>",unsafe_allow_html=True)
     elif not scr_run:
         st.markdown("""<div class='ib-landing'>
             <div class='ib-landing-title'>Earnings<br><em>Screener</em></div>
@@ -982,4 +875,4 @@ elif page == "🔍  Earnings Screener":
                 <div class='ib-stat'><span class='ib-stat-num'>4</span><span class='ib-stat-lbl'>Filters</span></div>
                 <div class='ib-stat'><span class='ib-stat-num'>Live</span><span class='ib-stat-lbl'>Data</span></div>
             </div>
-        </div>""", unsafe_allow_html=True)
+        </div>""",unsafe_allow_html=True)
