@@ -1,6 +1,6 @@
 """
-IB Toolkit — Seismic Waveform Animated Streamlit App
-=====================================================
+IB Toolkit — Black Hole Animated Streamlit App
+===============================================
 streamlit run main.py
 pip install streamlit yfinance pandas numpy plotly
 """
@@ -24,16 +24,16 @@ st.markdown("""
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600&display=swap');
 
 html,body,[class*="css"],[data-testid="stAppViewContainer"]{
-    background:#020510!important;color:#e8eaf0!important;
+    background:#00000a!important;color:#e8eaf0!important;
     font-family:'Space Grotesk',sans-serif!important;
 }
-[data-testid="stAppViewContainer"]>.main{background:#020510!important;}
+[data-testid="stAppViewContainer"]>.main{background:#00000a!important;}
 [data-testid="stHeader"]{background:transparent!important;}
 [data-testid="stToolbar"]{display:none!important;}
 *{cursor:none!important;}
 
 section[data-testid="stSidebar"]{
-    background:rgba(2,5,16,0.98)!important;
+    background:rgba(0,0,8,0.97)!important;
     border-right:1px solid rgba(0,212,170,0.1)!important;
 }
 section[data-testid="stSidebar"] *{color:#e8eaf0!important;}
@@ -44,8 +44,8 @@ section[data-testid="stSidebar"] .stRadio label{
 }
 section[data-testid="stSidebar"] .stRadio label:hover{color:#00d4aa!important;}
 section[data-testid="stSidebar"] [data-testid="stTextInput"] input{
-    background:rgba(0,212,170,0.05)!important;
-    border:1px solid rgba(0,212,170,0.25)!important;
+    background:rgba(0,212,170,0.04)!important;
+    border:1px solid rgba(0,212,170,0.22)!important;
     border-radius:0!important;color:#e8eaf0!important;
     font-size:1rem!important;padding:0.5rem 0.75rem!important;
 }
@@ -63,8 +63,8 @@ section[data-testid="stSidebar"] button[kind="primary"]:hover{
     background:rgba(0,212,170,0.1)!important;box-shadow:0 0 20px rgba(0,212,170,0.2)!important;
 }
 section[data-testid="stSidebar"] .stSelectbox [data-baseweb="select"]{
-    background:rgba(0,212,170,0.05)!important;
-    border:1px solid rgba(0,212,170,0.2)!important;border-radius:0!important;
+    background:rgba(0,212,170,0.04)!important;
+    border:1px solid rgba(0,212,170,0.18)!important;border-radius:0!important;
 }
 section[data-testid="stSidebar"] .stSlider [data-baseweb="slider"] div[role="slider"]{background:#00d4aa!important;}
 section[data-testid="stSidebar"] .stSlider [data-testid="stSliderTrackFill"]{background:#00d4aa!important;}
@@ -75,6 +75,7 @@ section[data-testid="stSidebar"] .stSlider [data-testid="stSliderTrackFill"]{bac
     position:relative;padding:2.8rem 2.5rem;margin-bottom:1.5rem;
     border:1px solid rgba(0,212,170,0.15);overflow:hidden;
     animation:fadeUp 0.7s ease forwards;
+    background:rgba(0,0,8,0.6);
 }
 .ib-hero::after{content:'';position:absolute;top:-1px;left:0;width:60px;height:2px;background:#00d4aa;}
 .ib-hero-eyebrow{font-size:0.65rem;letter-spacing:0.28em;text-transform:uppercase;color:#00d4aa;margin-bottom:0.75rem;}
@@ -86,7 +87,7 @@ section[data-testid="stSidebar"] .stSlider [data-testid="stSliderTrackFill"]{bac
 .ib-section em{font-style:italic;color:#00d4aa;}
 
 .ib-card{
-    background:rgba(10,13,26,0.92);border:1px solid rgba(0,212,170,0.1);
+    background:rgba(0,0,8,0.88);border:1px solid rgba(0,212,170,0.1);
     padding:1.25rem 1.4rem;margin-bottom:0.75rem;position:relative;overflow:hidden;
     transition:border-color 0.3s,transform 0.3s;animation:fadeUp 0.5s ease forwards;
 }
@@ -105,12 +106,12 @@ section[data-testid="stSidebar"] .stSlider [data-testid="stSliderTrackFill"]{bac
 [data-testid="stDataFrame"]{border:1px solid rgba(0,212,170,0.1)!important;border-radius:0!important;}
 [data-testid="stDataFrame"] th{background:rgba(0,212,170,0.06)!important;color:#00d4aa!important;font-size:0.7rem!important;letter-spacing:0.1em!important;text-transform:uppercase!important;border-bottom:1px solid rgba(0,212,170,0.15)!important;}
 [data-testid="stDataFrame"] td{color:#8892a4!important;font-size:0.82rem!important;border-bottom:1px solid rgba(255,255,255,0.03)!important;}
-[data-testid="stExpander"]{border:1px solid rgba(0,212,170,0.1)!important;border-radius:0!important;background:rgba(10,13,26,0.6)!important;}
+[data-testid="stExpander"]{border:1px solid rgba(0,212,170,0.1)!important;border-radius:0!important;background:rgba(0,0,8,0.6)!important;}
 [data-testid="stProgress"]>div>div{background:linear-gradient(90deg,#00d4aa,#00b894)!important;}
 
-.ib-disclaimer{border:1px solid rgba(255,255,255,0.04);padding:1rem 1.5rem;color:#2a3044;font-size:0.72rem;line-height:1.7;margin-top:2.5rem;}
+.ib-disclaimer{border:1px solid rgba(255,255,255,0.04);padding:1rem 1.5rem;color:#1a1f2e;font-size:0.72rem;line-height:1.7;margin-top:2.5rem;}
 
-.ib-tape-outer{overflow:hidden;border-top:1px solid rgba(0,212,170,0.07);border-bottom:1px solid rgba(0,212,170,0.07);padding:0.55rem 0;margin-bottom:1.5rem;background:rgba(2,5,16,0.8);}
+.ib-tape-outer{overflow:hidden;border-top:1px solid rgba(0,212,170,0.07);border-bottom:1px solid rgba(0,212,170,0.07);padding:0.55rem 0;margin-bottom:1.5rem;background:rgba(0,0,8,0.75);}
 .ib-tape{display:flex;gap:3rem;white-space:nowrap;animation:tape 40s linear infinite;}
 .ib-tape-item{font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;color:#4a5568;}
 .ib-tape-item .up{color:#00d4aa;}.ib-tape-item .dn{color:#ff6b6b;}
@@ -133,114 +134,197 @@ section[data-testid="stSidebar"] .stSlider [data-testid="stSliderTrackFill"]{bac
 """, unsafe_allow_html=True)
 
 # ─────────────────────────────────────────────
-#  SEISMIC WAVEFORM BACKGROUND + CURSOR
+#  BLACK HOLE BACKGROUND + CURSOR
 # ─────────────────────────────────────────────
 components.html("""
-<canvas id="ib-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
-<div id="ib-cur" style="position:fixed;width:8px;height:8px;background:#00d4aa;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width 0.15s,height 0.15s;"></div>
-<div id="ib-ring" style="position:fixed;width:28px;height:28px;border:1px solid rgba(0,212,170,0.5);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:all 0.18s;"></div>
+<canvas id="ib-c" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+<div id="ib-cur" style="position:fixed;width:7px;height:7px;background:#00d4aa;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width 0.15s,height 0.15s;"></div>
+<div id="ib-ring" style="position:fixed;width:26px;height:26px;border:1px solid rgba(0,212,170,0.5);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:all 0.18s;"></div>
 <script>
 (function(){
-var C=document.getElementById('ib-canvas');
+var C=document.getElementById('ib-c');
 var ctx=C.getContext('2d');
 var cur=document.getElementById('ib-cur');
 var ring=document.getElementById('ib-ring');
 function resize(){C.width=window.innerWidth;C.height=window.innerHeight;}
-resize(); window.addEventListener('resize',resize);
+resize();window.addEventListener('resize',resize);
 
-var mx=C.width/2, my=C.height/2;
-var hexRipples=[], lastHex=0, surge=0, t=0;
+var mx=C.width*0.65,my=C.height*0.48;
+var BHX=C.width*0.65,BHY=C.height*0.48;
+var t=0,zoom=0,zoomTarget=0,hexR=[],lastH=0;
+var starsDrawn=false;
 
-var waves=[
-  {freq:0.016,speed:0.7,amp:20,y:0.08,col:'rgba(0,212,170,',base:0.10,phase:0.0},
-  {freq:0.022,speed:0.45,amp:15,y:0.20,col:'rgba(0,212,170,',base:0.07,phase:1.2},
-  {freq:0.011,speed:1.0,amp:26,y:0.35,col:'rgba(37,99,235,',base:0.09,phase:2.4},
-  {freq:0.028,speed:0.65,amp:11,y:0.52,col:'rgba(0,212,170,',base:0.06,phase:0.8},
-  {freq:0.018,speed:0.85,amp:22,y:0.67,col:'rgba(37,99,235,',base:0.08,phase:3.1},
-  {freq:0.013,speed:0.55,amp:18,y:0.80,col:'rgba(0,212,170,',base:0.07,phase:1.8},
-  {freq:0.024,speed:0.75,amp:14,y:0.92,col:'rgba(37,99,235,',base:0.05,phase:2.9},
+// Static star field
+var staticStars=[];
+for(var i=0;i<350;i++){
+  staticStars.push({
+    x:Math.random()*2000,y:Math.random()*1200,
+    r:Math.random()*0.9+0.1,
+    o:Math.random()*0.4+0.05,
+    pulse:Math.random()*Math.PI*2,
+    speed:Math.random()*0.015
+  });
+}
+
+var LABELS=['DCF','WACC','P/E','FCF','EV','EBITDA','IRR','NPV','Beta','ROE','LBO','M&A','ROIC','NAV','IPO','CAPM','Alpha','Yield','DD','SPV'];
+var particles=[];
+for(var i=0;i<240;i++){
+  var dist=70+Math.pow(Math.random(),0.6)*300;
+  particles.push({
+    angle:Math.random()*Math.PI*2,
+    dist:dist,
+    origDist:dist,
+    speed:(0.0015+Math.random()*0.005)*(Math.random()>0.5?1:-1),
+    r:Math.random()*1.5+0.2,
+    opacity:Math.random()*0.7+0.15,
+    label:i<LABELS.length?LABELS[i]:null,
+    lp:Math.random()*Math.PI*2,
+    col:Math.random()>0.55?0:Math.random()>0.5?1:2,
+    tiltFactor:0.28+Math.random()*0.18
+  });
+}
+
+var diskRings=[
+  {r:42,w:7,a:0.95,spd:0.0012,hue:0},
+  {r:60,w:4,a:0.55,spd:-0.0009,hue:0},
+  {r:82,w:2.5,a:0.35,spd:0.0007,hue:1},
+  {r:110,w:2,a:0.22,spd:-0.0005,hue:0},
+  {r:145,w:1.5,a:0.15,spd:0.0004,hue:1},
+  {r:190,w:1,a:0.10,spd:-0.0003,hue:0},
+  {r:245,w:0.7,a:0.06,spd:0.0002,hue:1},
 ];
+diskRings.forEach(function(r){r.angle=Math.random()*Math.PI*2;});
 
-var scanX=0;
-
-function drawHex(x,y,size,alpha,rot){
+function drawHex(x,y,sz,a,rot){
   ctx.save();ctx.translate(x,y);ctx.rotate(rot||0);
   ctx.beginPath();
-  for(var i=0;i<6;i++){var a=Math.PI/6+i*Math.PI/3;i===0?ctx.moveTo(size*Math.cos(a),size*Math.sin(a)):ctx.lineTo(size*Math.cos(a),size*Math.sin(a));}
-  ctx.closePath();ctx.strokeStyle='rgba(0,212,170,'+alpha+')';ctx.lineWidth=0.6;ctx.stroke();ctx.restore();
+  for(var i=0;i<6;i++){var ang=Math.PI/6+i*Math.PI/3;i===0?ctx.moveTo(sz*Math.cos(ang),sz*Math.sin(ang)):ctx.lineTo(sz*Math.cos(ang),sz*Math.sin(ang));}
+  ctx.closePath();ctx.strokeStyle='rgba(0,212,170,'+a+')';ctx.lineWidth=0.5;ctx.stroke();ctx.restore();
 }
 
 function frame(){
-  t+=0.016;
-  if(surge>0) surge-=0.025;
-  ctx.fillStyle='rgba(2,5,16,0.22)';
+  t+=0.011;
+  zoom+=(zoomTarget-zoom)*0.04;
+  BHX=C.width*0.65; BHY=C.height*0.48;
+
+  ctx.fillStyle='rgba(0,0,8,0.16)';
   ctx.fillRect(0,0,C.width,C.height);
 
-  waves.forEach(function(w){
-    var wy=w.y*C.height;
-    var distY=Math.abs(wy-my)/C.height;
-    var mb=Math.max(0,1-distY*3.5)*0.65;
-    var sb=surge*0.45;
-    var amp=w.amp*(1+mb+sb);
+  // Static stars
+  staticStars.forEach(function(s){
+    s.pulse+=s.speed;
+    var glow=0.3+0.2*Math.sin(s.pulse);
+    var distBH=Math.hypot(s.x-BHX,s.y-BHY);
+    var dim=Math.min(1,distBH/120);
+    ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle='rgba(200,220,255,'+(s.o*glow*dim)+')';ctx.fill();
+  });
 
+  // Accretion disk rings
+  diskRings.forEach(function(rng,ri){
+    rng.angle+=rng.spd;
+    ctx.save();ctx.translate(BHX,BHY);ctx.rotate(rng.angle+ri*0.28);
+    ctx.scale(1,rng.hue===0?0.30:0.34);
+    var col=rng.hue===0?'0,212,170':'37,99,235';
+    var grd=ctx.createRadialGradient(0,0,rng.r-rng.w,0,0,rng.r+rng.w*1.5);
+    grd.addColorStop(0,'rgba('+col+',0)');
+    grd.addColorStop(0.4,'rgba('+col+','+rng.a+')');
+    grd.addColorStop(0.65,'rgba('+col+','+rng.a*0.7+')');
+    grd.addColorStop(1,'rgba('+col+',0)');
+    ctx.beginPath();ctx.arc(0,0,rng.r,0,Math.PI*2);
+    ctx.strokeStyle=grd;ctx.lineWidth=rng.w*2.5;ctx.stroke();
+    ctx.restore();
+  });
+
+  // Relativistic jets
+  for(var side=-1;side<=1;side+=2){
+    var jl=140+Math.sin(t*1.8)*25+zoom*30;
+    var gj=ctx.createLinearGradient(BHX,BHY,BHX,BHY+side*jl);
+    gj.addColorStop(0,'rgba(0,212,170,0.45)');
+    gj.addColorStop(0.4,'rgba(0,212,170,0.2)');
+    gj.addColorStop(1,'rgba(0,212,170,0)');
     ctx.beginPath();
-    ctx.moveTo(0,wy);
-    for(var x=0;x<=C.width;x+=3){
-      var y=wy+Math.sin(x*w.freq+t*w.speed+w.phase)*amp
-               +Math.sin(x*w.freq*2.1+t*w.speed*1.3+w.phase)*amp*0.28
-               +Math.sin(x*w.freq*0.5+t*w.speed*0.6+w.phase)*amp*0.15;
-      ctx.lineTo(x,y);
-    }
-    ctx.lineTo(C.width,wy);ctx.closePath();
-    var gr=ctx.createLinearGradient(0,wy-amp*2.5,0,wy+amp*2.5);
-    gr.addColorStop(0,w.col+(w.base*0.4*(1+mb))+')');
-    gr.addColorStop(0.5,w.col+(w.base*(1+mb*1.8))+')');
-    gr.addColorStop(1,w.col+'0)');
-    ctx.fillStyle=gr;ctx.fill();
+    ctx.moveTo(BHX-10+Math.sin(t)*3,BHY);
+    ctx.lineTo(BHX,BHY+side*jl);
+    ctx.lineTo(BHX+10-Math.sin(t)*3,BHY);
+    ctx.fillStyle=gj;ctx.fill();
+    // Jet pulse
+    ctx.beginPath();ctx.arc(BHX,BHY+side*jl*0.3,3+Math.sin(t*3+side)*2,0,Math.PI*2);
+    ctx.fillStyle='rgba(0,212,170,0.3)';ctx.fill();
+  }
 
-    ctx.beginPath();
-    for(var x=0;x<=C.width;x+=3){
-      var y=wy+Math.sin(x*w.freq+t*w.speed+w.phase)*amp
-               +Math.sin(x*w.freq*2.1+t*w.speed*1.3+w.phase)*amp*0.28
-               +Math.sin(x*w.freq*0.5+t*w.speed*0.6+w.phase)*amp*0.15;
-      x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-    }
-    ctx.strokeStyle=w.col+(0.28+mb*0.55+sb*0.3)+')';
-    ctx.lineWidth=0.8+mb*1.8;ctx.stroke();
+  // Orbiting particles
+  particles.forEach(function(p){
+    p.angle+=p.speed*(1+zoom*0.8);
+    p.lp+=0.014;
 
-    // Pulse dots near cursor
-    for(var x=40;x<C.width;x+=55){
-      var y=wy+Math.sin(x*w.freq+t*w.speed+w.phase)*amp;
-      var pd=Math.hypot(x-mx,y-my);
-      if(pd<90){
-        var pa=1-pd/90;
-        ctx.beginPath();ctx.arc(x,y,1.5+pa*3.5,0,Math.PI*2);
-        ctx.fillStyle=w.col+(0.5+pa*0.5)+')';ctx.fill();
+    // Zoom pull
+    if(zoom>0.05){
+      p.dist=Math.max(40,p.dist-zoom*1.2);
+    } else {
+      p.dist=Math.min(p.origDist,p.dist+0.3);
+    }
+
+    var px=BHX+Math.cos(p.angle)*p.dist;
+    var py=BHY+Math.sin(p.angle)*p.dist*p.tiltFactor;
+
+    // Mouse pull
+    var dm=Math.hypot(px-mx,py-my);
+    if(dm<130){ p.angle+=(1-dm/130)*0.018*(Math.random()-0.5); }
+
+    var dbh=Math.hypot(px-BHX,py-BHY);
+    var bright=Math.min(1,dbh/55);
+
+    var cols=[
+      'rgba(0,212,170,',
+      'rgba(37,99,235,',
+      'rgba(200,220,255,'
+    ];
+    ctx.beginPath();ctx.arc(px,py,p.r,0,Math.PI*2);
+    ctx.fillStyle=cols[p.col]+(p.opacity*bright)+')';ctx.fill();
+
+    if(p.label&&dbh>85){
+      var lf=(0.35+0.28*Math.sin(p.lp))*bright;
+      if(lf>0.12){
+        ctx.font='9px monospace';
+        ctx.fillStyle='rgba(0,212,170,'+lf+')';
+        ctx.fillText(p.label,px+p.r+4,py-p.r-1);
       }
     }
   });
 
-  // Oscilloscope scan line
-  scanX+=1.8;if(scanX>C.width)scanX=0;
-  var sg=ctx.createLinearGradient(scanX-40,0,scanX+6,0);
-  sg.addColorStop(0,'rgba(0,212,170,0)');
-  sg.addColorStop(0.6,'rgba(0,212,170,0.04)');
-  sg.addColorStop(1,'rgba(0,212,170,0.12)');
-  ctx.fillStyle=sg;ctx.fillRect(scanX-40,0,46,C.height);
+  // BH core — deep void
+  var coreR=34+zoom*12;
+  var voidR=coreR*2.8;
+  var cg=ctx.createRadialGradient(BHX,BHY,0,BHX,BHY,voidR);
+  cg.addColorStop(0,'rgba(0,0,0,1)');
+  cg.addColorStop(0.35,'rgba(0,0,0,1)');
+  cg.addColorStop(0.6,'rgba(0,0,8,0.85)');
+  cg.addColorStop(0.8,'rgba(0,0,15,0.5)');
+  cg.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.beginPath();ctx.arc(BHX,BHY,voidR,0,Math.PI*2);
+  ctx.fillStyle=cg;ctx.fill();
 
-  // Crosshair
-  ctx.beginPath();ctx.moveTo(mx,0);ctx.lineTo(mx,C.height);
-  ctx.strokeStyle='rgba(0,212,170,0.05)';ctx.lineWidth=1;ctx.stroke();
-  ctx.beginPath();ctx.moveTo(0,my);ctx.lineTo(C.width,my);
-  ctx.strokeStyle='rgba(0,212,170,0.05)';ctx.lineWidth=1;ctx.stroke();
+  // Photon sphere
+  ctx.beginPath();ctx.arc(BHX,BHY,coreR+3,0,Math.PI*2);
+  ctx.strokeStyle='rgba(0,212,170,'+(0.55+zoom*0.3)+')';ctx.lineWidth=1.5;ctx.stroke();
+  ctx.beginPath();ctx.arc(BHX,BHY,coreR+9,0,Math.PI*2);
+  ctx.strokeStyle='rgba(0,212,170,'+(0.18+zoom*0.15)+')';ctx.lineWidth=4;ctx.stroke();
+  ctx.beginPath();ctx.arc(BHX,BHY,coreR+18,0,Math.PI*2);
+  ctx.strokeStyle='rgba(0,212,170,0.06)';ctx.lineWidth=8;ctx.stroke();
 
-  // Hex ripples
-  hexRipples=hexRipples.filter(function(r){return r.life>0;});
-  hexRipples.forEach(function(r){
-    r.life-=0.02;r.size+=2.2;
-    drawHex(r.x,r.y,r.size,r.life*0.28,r.rot);
-    drawHex(r.x,r.y,r.size*0.55,r.life*0.14,r.rot+0.52);
-  });
+  // Gravitational lensing shimmer
+  if(Math.random()<0.3){
+    var la=Math.random()*Math.PI*2;
+    var lr=coreR+5+Math.random()*15;
+    var lx=BHX+Math.cos(la)*lr,ly=BHY+Math.sin(la)*lr*0.35;
+    ctx.beginPath();ctx.arc(lx,ly,1+Math.random()*2,0,Math.PI*2);
+    ctx.fillStyle='rgba(255,255,255,0.6)';ctx.fill();
+  }
+
+  // Hex cursor ripples
+  hexR=hexR.filter(function(r){return r.life>0;});
+  hexR.forEach(function(r){r.life-=0.022;r.size+=2.2;drawHex(r.x,r.y,r.size,r.life*0.28,r.rot);});
 
   requestAnimationFrame(frame);
 }
@@ -251,15 +335,16 @@ document.addEventListener('mousemove',function(e){
   cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
   ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';
   var now=Date.now();
-  if(now-lastHex>105){lastHex=now;hexRipples.push({x:mx,y:my,size:3,life:0.65,rot:Math.random()*3.14});}
+  if(now-lastH>105){lastH=now;hexR.push({x:mx,y:my,size:3,life:0.6,rot:Math.random()*3.14});}
 });
 
 document.addEventListener('click',function(e){
-  surge=1;
-  for(var i=0;i<6;i++) hexRipples.push({x:e.clientX,y:e.clientY,size:2+i*7,life:1-i*0.1,rot:i*0.52});
+  zoomTarget=1;
+  setTimeout(function(){zoomTarget=0;},900);
+  for(var i=0;i<6;i++) hexR.push({x:e.clientX,y:e.clientY,size:2+i*7,life:0.95-i*0.1,rot:i*0.52});
   cur.style.width='18px';cur.style.height='18px';
   ring.style.width='55px';ring.style.height='55px';
-  setTimeout(function(){cur.style.width='8px';cur.style.height='8px';ring.style.width='28px';ring.style.height='28px';},220);
+  setTimeout(function(){cur.style.width='7px';cur.style.height='7px';ring.style.width='26px';ring.style.height='26px';},220);
 });
 })();
 </script>
@@ -337,7 +422,7 @@ with st.sidebar:
         <div style='font-family:Cormorant Garamond,serif;font-size:1.6rem;font-weight:300;color:#e8eaf0;'>
             IB <em style='font-style:italic;color:#00d4aa;'>Toolkit</em>
         </div>
-        <div style='font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:#2a3044;margin-top:0.3rem;'>
+        <div style='font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:#1a1f2e;margin-top:0.3rem;'>
             Investment Banking Suite
         </div>
     </div>""",unsafe_allow_html=True)
@@ -349,7 +434,7 @@ with st.sidebar:
         "🔍  Earnings Screener",
     ],label_visibility="collapsed")
     st.divider()
-    st.markdown("<div style='font-size:0.65rem;color:#2a3044;line-height:1.6;'>Data via Yahoo Finance<br>For educational use only</div>",unsafe_allow_html=True)
+    st.markdown("<div style='font-size:0.65rem;color:#1a1f2e;line-height:1.6;'>Data via Yahoo Finance<br>For educational use only</div>",unsafe_allow_html=True)
 
 
 # ══════════════════════════════════════════════════════════════
