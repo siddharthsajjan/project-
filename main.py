@@ -760,11 +760,15 @@ elif page == "🏢  Comparable Companies":
 
         section_title(f"Comps Table <em>·</em> <span style='font-size:1rem;color:#4a5568;'>{sn}</span>")
         disp = df.copy()
-        disp["Price"]       = disp["Price"].apply(lambda x: f"${x:,.2f}" if not np.isnan(x) else "N/A")
-        disp["Mkt Cap"]     = disp["Mkt Cap"].apply(lambda x: f"${x:,.1f}B" if not np.isnan(x) else "N/A")
+        def sfmt(x, fmt):
+            try:
+                return fmt(float(x)) if x is not None and not np.isnan(float(x)) else "N/A"
+            except: return "N/A"
+        if "Price"    in disp.columns: disp["Price"]    = disp["Price"].apply(lambda x: sfmt(x, lambda v: f"${v:,.2f}"))
+        if "Mkt Cap"  in disp.columns: disp["Mkt Cap"]  = disp["Mkt Cap"].apply(lambda x: sfmt(x, lambda v: f"${v:,.1f}B"))
         for c in ["EV/EBITDA","EV/Revenue","P/E","P/E Fwd","Debt/EBITDA"]:
-            disp[c] = disp[c].apply(lambda x: f"{x:.1f}×" if not np.isnan(x) else "N/A")
-        disp["FCF Yield"] = disp["FCF Yield"].apply(lambda x: f"{x*100:.1f}%" if not np.isnan(x) else "N/A")
+            if c in disp.columns: disp[c] = disp[c].apply(lambda x: sfmt(x, lambda v: f"{v:.1f}×"))
+        if "FCF Yield" in disp.columns: disp["FCF Yield"] = disp["FCF Yield"].apply(lambda x: sfmt(x, lambda v: f"{v*100:.1f}%"))
         st.dataframe(disp, use_container_width=True, hide_index=True)
 
         nc=["EV/EBITDA","EV/Revenue","P/E","P/E Fwd","Debt/EBITDA","FCF Yield"]
