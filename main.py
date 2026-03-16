@@ -771,13 +771,18 @@ elif page == "🏢  Comparable Companies":
         if "FCF Yield" in disp.columns: disp["FCF Yield"] = disp["FCF Yield"].apply(lambda x: sfmt(x, lambda v: f"{v*100:.1f}%"))
         st.dataframe(disp, use_container_width=True, hide_index=True)
 
-        nc=["EV/EBITDA","EV/Revenue","P/E","P/E Fwd","Debt/EBITDA","FCF Yield"]
+        nc=[c for c in ["EV/EBITDA","EV/Revenue","P/E","P/E Fwd","Debt/EBITDA","FCF Yield"] if c in df.columns]
+        def fmt_bench(c, v):
+            try:
+                if np.isnan(float(v)): return "N/A"
+                return f"{float(v)*100:.1f}%" if c=="FCF Yield" else f"{float(v):.1f}x"
+            except: return "N/A"
         med={c:df[c].median() for c in nc}
         mn={c:df[c].mean() for c in nc}
         section_title("Sector <em>Benchmarks</em>")
         bd=pd.DataFrame({"Metric":nc,
-            "Median":[f"{med[c]:.1f}×" if c!="FCF Yield" else f"{med[c]*100:.1f}%" for c in nc],
-            "Mean":  [f"{mn[c]:.1f}×"  if c!="FCF Yield" else f"{mn[c]*100:.1f}%"  for c in nc]})
+            "Median":[fmt_bench(c,med[c]) for c in nc],
+            "Mean":  [fmt_bench(c,mn[c])  for c in nc]})
         st.dataframe(bd, use_container_width=True, hide_index=True)
 
         section_title("Visual <em>Comparison</em>")
